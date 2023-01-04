@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { PostType } from '../../dummy-data';
 
 import classes from './post-item.module.css';
-import { PostType } from './posts-grid';
 
 type PostItemProps = {
   post: PostType;
