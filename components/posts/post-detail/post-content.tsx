@@ -1,11 +1,11 @@
 import React from 'react';
-import { PostType } from '../../../dummy-data';
+import { PostDataType } from '../../../helpers/posts-util';
 import Markdown from './markdown';
 
 import classes from './post-content.module.css';
 import PostHeader from './post-header';
 
-type PostContentProps = { post: PostType };
+type PostContentProps = { post: PostDataType };
 
 const PostContent = ({ post }: PostContentProps) => {
   const imagePath = `/images/posts/${post.slug}/${post.image}`;

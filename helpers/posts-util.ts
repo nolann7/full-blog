@@ -33,11 +33,11 @@ export const getPostData = (postIdentifier: string) => {
   return postData;
 };
 
-export const getFilesData = () => {
+export const getFileNames = () => {
   return fs.readdirSync(postsDirectory);
-}
+};
 export const getAllPosts = () => {
-  const postFiles = getFilesData()
+  const postFiles = getFileNames();
 
   const allPosts = postFiles.map(postFile => getPostData(postFile));
   const sortedPosts = allPosts.sort((postA, postB) =>
