@@ -2,11 +2,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { PostType } from '../../dummy-data';
+import { PostDataType } from '../../helpers/posts-util';
 
 import classes from './post-item.module.css';
 
 type PostItemProps = {
-  post: PostType;
+  post: PostDataType;
 };
 
 const PostItem = ({ post }: PostItemProps) => {

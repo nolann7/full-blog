@@ -1,13 +1,14 @@
-import { NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import FeaturedPosts from '../components/home-page/featured-posts';
 import Hero from '../components/home-page/hero';
 import { DUMMY_POSTS } from '../dummy-data';
+import { getFeaturedPosts, PostDataType } from '../helpers/posts-util';
 
-
-
-type HomePageProps = {};
-const HomePage: NextPage<HomePageProps> = ({}) => {
+type HomePageProps = { featuredPosts: PostDataType[] };
+const HomePage: NextPage<HomePageProps> = ({
+  featuredPosts,
+}: HomePageProps) => {
   return (
     <>
       <Head>
@@ -20,9 +21,17 @@ const HomePage: NextPage<HomePageProps> = ({}) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Hero />
-      <FeaturedPosts posts={DUMMY_POSTS} />
+      <FeaturedPosts posts={featuredPosts} />
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async ctx => {
+  const featuredPosts = getFeaturedPosts();
+  return {
+    props: { featuredPosts },
+    revalidate: 600,
+  };
 };
 
 export default HomePage;

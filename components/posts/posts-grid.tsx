@@ -1,11 +1,11 @@
 import React from 'react';
-import { PostType } from '../../dummy-data';
+import { PostDataType } from '../../helpers/posts-util';
 import PostItem from './post-item';
 
 import classes from './posts-grid.module.css';
 
 
-type PostsGridProps = { posts: PostType[] };
+type PostsGridProps = { posts: PostDataType[] };
 
 const PostsGrid = ({ posts }: PostsGridProps) => {
   return (

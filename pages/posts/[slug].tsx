@@ -1,15 +1,17 @@
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import PostContent from '../../components/posts/post-detail/post-content';
-import { DUMMY_POSTS } from '../../dummy-data';
+import { getAllPosts, PostDataType } from '../../helpers/posts-util';
 
-type PostDetailPageProps = {};
+type PostDetailPageProps = { posts: PostDataType[] };
 
-const PostDetailPage: NextPage<PostDetailPageProps> = () => {
+const PostDetailPage: NextPage<PostDetailPageProps> = ({
+  posts,
+}: PostDetailPageProps) => {
   const router = useRouter();
   const query = router.asPath.split('/')[2];
   console.log(query);
-  const detailedPost = DUMMY_POSTS.find(post => post.slug === query);
+  const detailedPost = posts.find(post => post.slug === query);
   console.log(detailedPost);
   return (
     <>
@@ -20,6 +22,13 @@ const PostDetailPage: NextPage<PostDetailPageProps> = () => {
       )}
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const allPosts = getAllPosts();
+  return {
+    props: { posts: allPosts },
+  };
 };
 
 export default PostDetailPage;

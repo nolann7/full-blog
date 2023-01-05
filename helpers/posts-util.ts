@@ -2,7 +2,7 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
 
-type PostDataType = {
+export type PostDataType = {
   title: string;
   date: string;
   image: string;

@@ -8,4 +8,4 @@ isFeatured: true
 
 # This is a title
 
-This is sime regular text with [link](https://google.com)
+This is some regular text with [link](https://google.com)

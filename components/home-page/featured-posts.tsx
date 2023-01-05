@@ -1,9 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
 import classes from './featured-posts.module.css';
-import PostsGrid, { PostType } from '../posts/posts-grid';
+import PostsGrid  from '../posts/posts-grid';
+import { PostDataType } from '../../helpers/posts-util';
 
-type FeaturedPostsProps = { posts:PostType[] };
+type FeaturedPostsProps = { posts:PostDataType[] };
 
 const FeaturedPosts = ({posts}: FeaturedPostsProps) => {
   return (
