@@ -1,18 +1,18 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import PostContent from '../../components/posts/post-detail/post-content';
-import { getAllPosts, PostDataType } from '../../helpers/posts-util';
+import {
+  getAllPosts,
+  getFilesData,
+  getPostData,
+  PostDataType,
+} from '../../helpers/posts-util';
 
-type PostDetailPageProps = { posts: PostDataType[] };
+type PostDetailPageProps = { detailedPost: PostDataType };
 
 const PostDetailPage: NextPage<PostDetailPageProps> = ({
-  posts,
+  detailedPost,
 }: PostDetailPageProps) => {
-  const router = useRouter();
-  const query = router.asPath.split('/')[2];
-  console.log(query);
-  const detailedPost = posts.find(post => post.slug === query);
-  console.log(detailedPost);
   return (
     <>
       {detailedPost ? (
@@ -24,10 +24,19 @@ const PostDetailPage: NextPage<PostDetailPageProps> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const allPosts = getAllPosts();
+export const getStaticProps: GetStaticProps = async ctx => {
+  const slug = ctx?.params?.slug;
+  if (!slug) return { props: { detailedPost: null } };
+  const detailedPost = getPostData(slug.toString());
   return {
-    props: { posts: allPosts },
+    props: { detailedPost },
+  };
+};
+export const getStaticPaths: GetStaticPaths = async ctx => {
+  const slugs = getFilesData().map(fileName => fileName.replace(/\.md$/, ''));
+  return {
+    paths: slugs.map(slug => ({ params: { slug } })),
+    fallback: false,
   };
 };
 

@@ -1,11 +1,21 @@
-import { NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import AllPosts from '../../components/posts/all-posts';
-import { DUMMY_POSTS } from '../../dummy-data';
+import { getAllPosts, PostDataType } from '../../helpers/posts-util';
 
-type AllPostsPageProps = {};
+type AllPostsPageProps = { allPosts: PostDataType[] };
 
-const AllPostsPage: NextPage<AllPostsPageProps> = () => {
-  return <AllPosts posts={DUMMY_POSTS}/>;
+const AllPostsPage: NextPage<AllPostsPageProps> = ({
+  allPosts,
+}: AllPostsPageProps) => {
+  return <AllPosts posts={allPosts} />;
+};
+
+export const getStaticProps: GetStaticProps = ctx => {
+  const allPosts = getAllPosts();
+  return {
+    props: { allPosts },
+    revalidate: 600,
+  };
 };
 
 export default AllPostsPage;

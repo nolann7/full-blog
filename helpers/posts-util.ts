@@ -20,11 +20,11 @@ type PostMetaDataType = {
 };
 const postsDirectory = path.join(process.cwd(), 'posts');
 
-const getPostData = (fileName: string) => {
-  const filePath = path.join(postsDirectory, fileName);
+export const getPostData = (postIdentifier: string) => {
+  const postSlug = postIdentifier.replace(/\.md$/, ''); // removes file extension in the end
+  const filePath = path.join(postsDirectory, `${postSlug}.md`);
   const fileContent = fs.readFileSync(filePath, 'utf-8');
   const { data, content } = matter(fileContent);
-  const postSlug = fileName.replace(/\.md$/, ''); // removes file extension in the end
   const postData: PostDataType = {
     slug: postSlug,
     ...(data as PostMetaDataType),
@@ -33,8 +33,11 @@ const getPostData = (fileName: string) => {
   return postData;
 };
 
+export const getFilesData = () => {
+  return fs.readdirSync(postsDirectory);
+}
 export const getAllPosts = () => {
-  const postFiles = fs.readdirSync(postsDirectory);
+  const postFiles = getFilesData()
 
   const allPosts = postFiles.map(postFile => getPostData(postFile));
   const sortedPosts = allPosts.sort((postA, postB) =>

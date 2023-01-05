@@ -1,9 +1,10 @@
 import React from 'react';
+import { PostDataType } from '../../helpers/posts-util';
 
 import classes from './all-posts.module.css';
-import PostsGrid, { PostType } from './posts-grid';
+import PostsGrid from './posts-grid';
 
-type AllPostsProps = { posts: PostType[] };
+type AllPostsProps = { posts: PostDataType[] };
 
 const AllPosts = ({ posts }: AllPostsProps) => {
   return (
