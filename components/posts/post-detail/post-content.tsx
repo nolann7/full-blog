@@ -13,9 +13,7 @@ const PostContent = ({ post }: PostContentProps) => {
   return (
     <article className={classes.content}>
       <PostHeader title={post.title} imagePath={imagePath} />
-      {/* <p> */}
-      <Markdown>{post.content}</Markdown>
-      {/* </p> */}
+      <Markdown slug={post.slug}>{post.content}</Markdown>
     </article>
   );
 };
