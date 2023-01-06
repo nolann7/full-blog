@@ -13,6 +13,23 @@ const Markdown = ({ children, slug }: MarkdownProps) => {
         height={300}
       />
     ),
+    // p: (paragraph: any) => {
+    //   const { node } = paragraph;
+    //   if (node.children[0].type === 'image') {
+    //     const image = node.children[0];
+    //     return (
+    //       <div>
+    //         <Image
+    //           src={`/images/posts/${slug}/${image.url}`}
+    //           alt={image.alt}
+    //           width={600}
+    //           height={300}
+    //         />
+    //       </div>
+    //     );
+    //   }
+    //   return <p>{paragraph.children}</p>;
+    // },
   };
 
   return (
