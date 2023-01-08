@@ -1,14 +1,15 @@
+import { createPortal } from 'react-dom';
 import classes from './notification.module.css';
 
 export type NotificationPropsType = {
-  notification:{
+  notification: {
     title: string;
     message: string;
     status: 'success' | 'error' | 'pending';
-  }
+  };
 };
 function Notification(props: NotificationPropsType) {
-const { title, message, status } = props.notification
+  const { title, message, status } = props.notification;
   let statusClasses = '';
 
   if (status === 'success') {
@@ -24,11 +25,12 @@ const { title, message, status } = props.notification
 
   const cssClasses = `${classes.notification} ${statusClasses}`;
 
-  return (
+  return createPortal(
     <div className={cssClasses}>
       <h2>{title}</h2>
       <p>{message}</p>
-    </div>
+    </div>,
+    document.getElementById('notifications')!,
   );
 }
 
