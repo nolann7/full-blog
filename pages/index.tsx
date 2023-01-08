@@ -2,7 +2,6 @@ import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import FeaturedPosts from '../components/home-page/featured-posts';
 import Hero from '../components/home-page/hero';
-import { DUMMY_POSTS } from '../dummy-data';
 import { getFeaturedPosts, PostDataType } from '../helpers/posts-util';
 
 type HomePageProps = { featuredPosts: PostDataType[] };
@@ -12,7 +11,7 @@ const HomePage: NextPage<HomePageProps> = ({
   return (
     <>
       <Head>
-        <title>Blog</title>
+        <title>Alex&apos; Blog</title>
         <meta
           name="description"
           content="Blog for Javascript, Typescript, ReactJs, NextJs"

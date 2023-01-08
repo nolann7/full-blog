@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import Head from 'next/head';
 import PostContent from '../../components/posts/post-detail/post-content';
 import {
   getFileNames,
@@ -13,6 +14,10 @@ const PostDetailPage: NextPage<PostDetailPageProps> = ({
 }: PostDetailPageProps) => {
   return (
     <>
+    <Head>
+      <title>{detailedPost.title}</title>
+      <meta name='description' content={detailedPost.excerpt}/>
+    </Head>
       {detailedPost ? (
         <PostContent post={detailedPost} />
       ) : (
