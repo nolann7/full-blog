@@ -1,4 +1,10 @@
-import React, { FormEvent, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useState,
+} from 'react';
 import Notification from '../ui/notification';
 
 import classes from './contact-form.module.css';
@@ -16,9 +22,13 @@ const ContactForm = ({}: ContactFormProps) => {
     message: '',
     status: 'pending',
   });
-  const emailInputRef = useRef<HTMLInputElement>(null!);
-  const nameInputRef = useRef<HTMLInputElement>(null!);
-  const messageInputRef = useRef<HTMLTextAreaElement>(null!);
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+  // const emailInputRef = useRef<HTMLInputElement>(null!);
+  // const nameInputRef = useRef<HTMLInputElement>(null!);
+  // const messageInputRef = useRef<HTMLTextAreaElement>(null!);
+  const router = useRouter();
 
   useEffect(() => {
     if (notification.status === 'success' || notification.status === 'error') {
@@ -31,11 +41,11 @@ const ContactForm = ({}: ContactFormProps) => {
 
   const submitMessageHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let [email, name, message] = [
-      emailInputRef.current.value,
-      nameInputRef.current.value,
-      messageInputRef.current.value,
-    ];
+    // let [email, name, message] = [
+    //   emailInputRef.current.value,
+    //   nameInputRef.current.value,
+    //   messageInputRef.current.value,
+    // ];
     setNotification({
       title: 'Loading...',
       message: 'Sending message',
@@ -69,6 +79,12 @@ const ContactForm = ({}: ContactFormProps) => {
           message: data.message,
           status: 'success',
         });
+        setEmail('');
+        setName('');
+        setMessage('');
+        setTimeout(() => {
+          router.push('/');
+        }, 2500);
       })
       .catch(err => {
         console.error(err);
@@ -87,16 +103,40 @@ const ContactForm = ({}: ContactFormProps) => {
           <div className={classes.controls}>
             <div className={classes.control}>
               <label htmlFor="email">Your email</label>
-              <input type="email" id="email" required ref={emailInputRef} />
+              <input
+                type="email"
+                id="email"
+                required
+                value={email}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setEmail(e.currentTarget.value)
+                }
+              />
             </div>
             <div className={classes.control}>
               <label htmlFor="name">Your Name</label>
-              <input type="text" id="name" required ref={nameInputRef} />
+              <input
+                type="text"
+                id="name"
+                required
+                value={name}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setName(e.currentTarget.value)
+                }
+              />
             </div>
           </div>
           <div className={classes.control}>
             <label htmlFor="message">Your message</label>
-            <textarea rows={5} id="message" ref={messageInputRef} />
+            <textarea
+              rows={5}
+              id="message"
+              required
+              value={message}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                setMessage(e.currentTarget.value)
+              }
+            />
           </div>
           <div className={classes.actions}>
             <button>Send Message</button>
