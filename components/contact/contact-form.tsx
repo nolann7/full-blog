@@ -7,14 +7,14 @@ type ContactFormProps = { children?: React.ReactNode };
 type NotificationType = {
   title: string;
   message: string;
-  status: 'success' | 'error';
+  status: 'success' | 'error'| 'pending';
 };
 const ContactForm = ({}: ContactFormProps) => {
   const [isNotificationShown, setIsNotificationShown] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({
     title: '',
     message: '',
-    status: 'error',
+    status: 'pending',
   });
 
   const emailInputRef = useRef<HTMLInputElement>(null!);
@@ -27,6 +27,13 @@ const ContactForm = ({}: ContactFormProps) => {
       nameInputRef.current.value,
       messageInputRef.current.value,
     ];
+    setNotification({
+      title: 'Loading...',
+      message: 'Sending message',
+      status: 'pending',
+    });
+    setIsNotificationShown(true);
+
     fetch('/api/contact', {
       method: 'POST',
       body: JSON.stringify({ email, name, message }),
@@ -38,26 +45,21 @@ const ContactForm = ({}: ContactFormProps) => {
         if (res.ok) return res.json();
 
         res.json().then(data => {
-          console.log(data.message);
           setNotification({
             title: 'Error!',
             message: data.message,
             status: 'error',
           });
-          setIsNotificationShown(true);
         });
 
         throw new Error('something went wrong with fetching');
       })
       .then(data => {
-        console.log(data);
         setNotification({
           title: 'Great!',
           message: data.message,
           status: 'success',
         });
-        console.log(notification);
-        setIsNotificationShown(true);
       })
       .catch(err => {
         console.error(err);
@@ -66,7 +68,6 @@ const ContactForm = ({}: ContactFormProps) => {
           message: err.message,
           status: 'error',
         });
-        setIsNotificationShown(true);
       })
       .finally(() => {
         setTimeout(() => {

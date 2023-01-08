@@ -2,10 +2,9 @@ import classes from './notification.module.css';
 
 export type NotificationPropsType = {
   notification:{
-
     title: string;
     message: string;
-    status: 'success' | 'error';
+    status: 'success' | 'error' | 'pending';
   }
 };
 function Notification(props: NotificationPropsType) {
@@ -18,6 +17,9 @@ const { title, message, status } = props.notification
 
   if (status === 'error') {
     statusClasses = classes.error;
+  }
+  if (status === 'pending') {
+    statusClasses = classes.pending;
   }
 
   const cssClasses = `${classes.notification} ${statusClasses}`;

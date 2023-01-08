@@ -32,6 +32,10 @@
 .error {
   background-color: var(--color-error-500);
 }
+.pending {
+  background-color: #ccc;
+  color: #333;
+}
 
 @media (min-width: 768px) {
   .notification {
