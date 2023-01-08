@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef, useState } from 'react';
+import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import Notification from '../ui/notification';
 
 import classes from './contact-form.module.css';
@@ -7,7 +7,7 @@ type ContactFormProps = { children?: React.ReactNode };
 type NotificationType = {
   title: string;
   message: string;
-  status: 'success' | 'error'| 'pending';
+  status: 'success' | 'error' | 'pending';
 };
 const ContactForm = ({}: ContactFormProps) => {
   const [isNotificationShown, setIsNotificationShown] = useState(false);
@@ -16,10 +16,19 @@ const ContactForm = ({}: ContactFormProps) => {
     message: '',
     status: 'pending',
   });
-
   const emailInputRef = useRef<HTMLInputElement>(null!);
   const nameInputRef = useRef<HTMLInputElement>(null!);
   const messageInputRef = useRef<HTMLTextAreaElement>(null!);
+
+  useEffect(() => {
+    if (notification.status === 'success' || notification.status === 'error') {
+      const timer = setTimeout(() => {
+        setIsNotificationShown(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification.status]);
+
   const submitMessageHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let [email, name, message] = [
@@ -68,11 +77,6 @@ const ContactForm = ({}: ContactFormProps) => {
           message: err.message,
           status: 'error',
         });
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setIsNotificationShown(false);
-        }, 3000);
       });
   };
   return (
