@@ -23,7 +23,8 @@ export default async function handler(
       !email ||
       !email.includes('@') ||
       !message ||
-      message.trim() === ''
+      message.trim() === '' ||
+      message.length > 500
     ) {
       return res.status(422).json({ message: 'Invalid data' });
     }
@@ -55,6 +56,6 @@ export default async function handler(
     client.close();
     res
       .status(201)
-      .json({ message: 'Successfully stored message', newMessage });
+      .json({ message: 'message successfully stored! Thank you', newMessage });
   }
 }
