@@ -52,10 +52,9 @@ export default async function handler(
         .status(500)
         .json({ message: 'Failed to insert message to database' });
     }
+    client.close();
     res
       .status(201)
       .json({ message: 'Successfully stored message', newMessage });
-
-    client.close();
   }
 }
