@@ -10,7 +10,7 @@ const ContactForm = ({}: ContactFormProps) => {
   const messageInputRef = useRef<HTMLTextAreaElement>(null!);
   const submitMessageHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const [email, name, message] = [
+    let [email, name, message] = [
       emailInputRef.current.value,
       nameInputRef.current.value,
       messageInputRef.current.value,
